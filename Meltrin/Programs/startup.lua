@@ -2,12 +2,15 @@ term.clear()
 term.setCursorPos(1,1)
 function log(str,_level)
 	if not fs.exists("/Meltrin/main.log") then fs.open("/Meltrin/main.log","w").close() end
-	fs.open("/Meltrin/main.log","a").write("["..(_level or "Normal").."] "..str).close()
-	pritn(str)
+	f = fs.open("/Meltrin/main.log","a") f.write("["..(_level or "Normal").."] "..str.."\n") f.close()
+	print(str)
 end
 log("Started!")
 log("Loading boot config...")
-boot = textutils.unserialize(fs.open("/Meltring/Config/boot.cfg","r").readAll())
+f = fs.open("/Meltrin/Config/boot.cfg","r")
+h = f.readAll()
+f.close()
+boot = textutils.unserialize(h)
 log("Loaded!")
 for k,v in ipairs(fs.list("/Meltrin/APIs")) do
 	os.loadAPI("/Meltrin/APIs/"..v)
